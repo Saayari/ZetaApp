@@ -1,10 +1,62 @@
-import React from 'react';
+import React,  {useRef} from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Text, StyleSheet, View, TextInput, TouchableOpacity, Dimensions} from 'react-native';
+import { Text, StyleSheet, View, TextInput, TouchableWithoutFeedback, Dimensions, PanResponder} from 'react-native';
+
+interface buttonProps {
+    buttonNumber: string;
+    handlePress: (text: string) => void;
+}
 
 const ArithmeticGame = () => {
-    const [answer, onChangeAnswer] = React.useState("");
+    const [answer, setAnswer] = React.useState("");
 
+    const handlePress = (buttonNumber: string) => {
+        setAnswer(answer + buttonNumber);
+    }
+
+    const deleteAnswer = () => {
+        setAnswer("");
+    }
+
+    const NumpadButton: React.FC<buttonProps> = ({buttonNumber, handlePress}) => {
+        const panResponder = useRef(
+            PanResponder.create({
+              onStartShouldSetPanResponder: () => true,
+              onPanResponderGrant: () => {
+                handlePress(buttonNumber);
+              },
+            })
+          ).current;
+        
+
+        return (
+            <View {...panResponder.panHandlers}>
+                <View style={styles.numpad} >
+                    <Text style={styles.text_numpad}>{buttonNumber}</Text>
+                </View>
+
+            </View>
+        )
+    }
+
+    const DeleteButton: React.FC<buttonProps>  =  ({buttonNumber, handlePress}) => {
+        const panResponder = useRef(
+            PanResponder.create({
+              onStartShouldSetPanResponder: () => true,
+              onPanResponderGrant: () => {
+                handlePress(buttonNumber);
+              },
+            })
+          ).current;
+
+        return (
+            <View {...panResponder.panHandlers}>
+                <View style={styles.numpad_delete}>
+                    <Text style={styles.text_numpad}>{buttonNumber}</Text>
+                </View>
+            </View>
+        )
+    }
 
     return (
         <SafeAreaView style={styles.container}>
@@ -23,41 +75,49 @@ const ArithmeticGame = () => {
             </View>
 
             <View style={styles.game_container}>
-                <View style={{flexDirection: "row"}}>
-                    <Text style={styles.text_game}>898</Text>
-                    <Text style={styles.text_game}> + </Text>
-                    <Text style={styles.text_game}>234</Text>
-                    <Text style={styles.text_game}> = </Text>
+                <View style={{alignItems: "center", marginTop: 20, justifyContent: "space-evenly"}}>
+                    <View style={{flexDirection: "row"}}>
+                        <Text style={styles.text_game}>898</Text>
+                        <Text style={styles.text_game}> + </Text>
+                        <Text style={styles.text_game}>234</Text>
+                        <Text style={styles.text_game}> = </Text>
+                    </View>
+
                     <TextInput 
                         style={styles.answer}
                         keyboardType="numeric"
                         textAlign='center'
                         placeholderTextColor={'#888'}
-                        onChangeText={onChangeAnswer}
                         value={answer}
                         editable={false}
                     />
                 </View>
-                <View>
+                <View style={{}}>
                     <View style={{flexDirection: "row"}}>
-                        <TouchableOpacity style={styles.numpad}>
-                            <Text style={styles.text_numpad}>1</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.numpad}>
-                            <Text style={styles.text_numpad}>2</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.numpadright}>
-                            <Text style={styles.text_numpad}>3</Text>
-                        </TouchableOpacity>
+                        <NumpadButton  buttonNumber="1" handlePress={handlePress}/>
+                        <NumpadButton  buttonNumber="2" handlePress={handlePress}/>
+                        <NumpadButton  buttonNumber="3" handlePress={handlePress}/>
                     </View>
-                    <View>
-
+                    <View style={{flexDirection: "row"}}>
+                        <NumpadButton  buttonNumber="4" handlePress={handlePress}/>
+                        <NumpadButton  buttonNumber="5" handlePress={handlePress}/>
+                        <NumpadButton  buttonNumber="6" handlePress={handlePress}/>
                     </View>
+                    <View style={{flexDirection: "row"}}>
+                        <NumpadButton  buttonNumber="7" handlePress={handlePress}/>
+                        <NumpadButton  buttonNumber="8" handlePress={handlePress}/>
+                        <NumpadButton  buttonNumber="9" handlePress={handlePress}/>
+                    </View>
+                    <View style={{flexDirection: "row"}}>
+                        <NumpadButton  buttonNumber="-" handlePress={handlePress}/>
+                        <NumpadButton  buttonNumber="0" handlePress={handlePress}/>
+                        <NumpadButton  buttonNumber="." handlePress={handlePress}/>
+                    </View>
+                    
                     <View>
-
+                        <DeleteButton  buttonNumber="X" handlePress={deleteAnswer}/>
                     </View>
                 </View>
-
             </View>
 
         </SafeAreaView>
@@ -78,7 +138,7 @@ const styles = StyleSheet.create({
     },
     game_container: {
         flex: 1,
-        justifyContent: "center",
+        justifyContent: "space-between",
         alignItems: "center",
     },
     text_game: {
@@ -87,25 +147,35 @@ const styles = StyleSheet.create({
         fontFamily: "Quicksand-Regular",
     },
     answer: {
-        height: 50,
-        width: 50,
+        height: 70,
+        padding: 20,
+        width: Dimensions.get('window').width * 2 / 3,
+        marginTop: 15,
+        borderWidth: 1,
         borderColor: '#888',
+        fontFamily: "Quicksand-Regular",
+        fontSize: 50,
+        alignItems: "center",
+        justifyContent: "center",
     },
     numpad: {
         borderTopWidth: 1,
-        borderBottomWidth: 1,
         borderLeftWidth: 1,
         borderColor: "black",
         width: Dimensions.get('window').width / 3,
+        height: Dimensions.get('window').width / 200 * 43,
+        justifyContent: "center",
         alignItems: "center",
     },
-    numpadright: {
+    numpad_delete: {
         borderTopWidth: 1,
         borderBottomWidth: 1,
         borderLeftWidth: 1,
         borderRightWidth: 1,
         borderColor: "black",
-        width: Dimensions.get('window').width / 3,
+        width: Dimensions.get('window').width,
+        height: Dimensions.get('window').width / 27 * 8,
+        justifyContent: "center",
         alignItems: "center",
     },
     text_numpad: {
