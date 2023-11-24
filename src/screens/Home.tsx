@@ -1,37 +1,25 @@
-import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
-import { useFonts } from "expo-font";
+import {StyleSheet, Text, View, Image, TouchableOpacity, SafeAreaView} from 'react-native';
+
 import React from 'react';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { StackParamList } from '..';
 
-type Navigation = {
-    navigate: (arg: string) => void;
-};
+const Home = () => {
 
-type HomeProps = {
-    navigation: Navigation;
-};
-
-const Home: React.FC<HomeProps> = ({ navigation }) => {
-    const [fontsLoaded] = useFonts({
-        "Quicksand-Bold": require("../assets/fonts/Quicksand-Bold.ttf"),
-        "Quicksand-Regular": require("../assets/fonts/Quicksand-Regular.ttf"),
-    });
-    if (!fontsLoaded) {
-        return (
-            <View style={styles.container}>
-                <Image style={styles.logo} source={require("../assets/squarezeta.png")} />
-                <Text style={styles.heading}>Zeta App</Text>
-            </View>
-          );
-    }
     
-    function navigate() {
-        navigation.navigate('Settings');
-    }
+    const navigation = useNavigation<NativeStackNavigationProp<StackParamList>>();
 
     return (
-        <TouchableOpacity style={styles.container} onPress={navigate}>
-            <Image style={styles.logo} source={require("../assets/squarezeta.png")} />
-            <Text style={styles.heading}>Zeta App</Text>
+        <TouchableOpacity style={styles.container} onPress={() => {navigation.navigate("Settings")}}>
+            <View style={{marginBottom: 100, alignItems: "center", justifyContent: "center"}}>
+                <Image style={styles.logo} source={require("../assets/squarezeta.png")} />
+                <Text style={styles.heading}>Zeta App</Text>
+                <Text style={styles.text_description}>The Arithmetic Game is a fast-paced speed drill where you are given two minutes to solve as many arithmetic problems as you can.</Text>
+                <Text style={styles.text_description}>Entirely inspired by the website:</Text>
+                <Text style={styles.text_description}>arithmetic.zetamac.com.</Text>
+            </View>
+            <Text style={styles.text}>Click to continue</Text>
         </TouchableOpacity>
     )
 }
@@ -42,6 +30,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
+        padding: 20,
         alignItems: "center",
         justifyContent: "center",
     },
@@ -49,6 +38,19 @@ const styles = StyleSheet.create({
         color: '#888',
         fontSize: 48,
         fontFamily: "Quicksand-Bold",
+        marginBottom: 20,
+    },
+    text: {
+        color: '#888',
+        fontSize: 24,
+        fontFamily: "Quicksand-Regular",
+    },
+    text_description: {
+        color: '#888',
+        fontSize: 16,
+        fontFamily: "Quicksand-Regular",
+        marginBottom: 10,
+        marginLeft: 10,
     },
     logo: {
         width: 50,
