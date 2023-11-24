@@ -1,5 +1,8 @@
 import React from 'react';
 import {StyleSheet, Text, View, Image, TouchableOpacity, SafeAreaView, TextInput, TouchableWithoutFeedback,  Keyboard} from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { StackParamList } from '..';
 
 const Settings = () => {
     const [number1, onChangeNumber1] = React.useState("");
@@ -10,6 +13,8 @@ const Settings = () => {
     const [number6, onChangeNumber6] = React.useState("");
     const [number7, onChangeNumber7] = React.useState("");
     const [number8, onChangeNumber8] = React.useState("");
+
+    const navigation = useNavigation<NativeStackNavigationProp<StackParamList>>();
 
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -40,6 +45,7 @@ const Settings = () => {
                             placeholder="100"
                             keyboardType="numeric"
                             textAlign='center'
+                            placeholderTextColor={'#888'}
                         />
                         <Text style={styles.text_description}>) + (</Text>
                         <TextInput
@@ -49,6 +55,7 @@ const Settings = () => {
                             placeholder="2"
                             keyboardType="numeric"
                             textAlign='center'
+                            placeholderTextColor={'#888'}
                         />
                         <Text style={styles.text_description}> to </Text>
                         <TextInput
@@ -58,6 +65,7 @@ const Settings = () => {
                             placeholder="100"
                             keyboardType="numeric"
                             textAlign='center'
+                            placeholderTextColor={'#888'}
                         />
                         <Text style={styles.text_description}>)</Text>
                     </View>
@@ -75,6 +83,7 @@ const Settings = () => {
                             placeholder="2"
                             keyboardType="numeric"
                             textAlign='center'
+                            placeholderTextColor={'#888'}
                         />
                         <Text style={styles.text_description}> to </Text>
                         <TextInput
@@ -84,8 +93,9 @@ const Settings = () => {
                             placeholder="100"
                             keyboardType="numeric"
                             textAlign='center'
+                            placeholderTextColor={'#888'}
                         />
-                        <Text style={styles.text_description}>) + (</Text>
+                        <Text style={styles.text_description}>) x (</Text>
                         <TextInput
                             style={styles.input}
                             onChangeText={onChangeNumber7}
@@ -93,6 +103,7 @@ const Settings = () => {
                             placeholder="2"
                             keyboardType="numeric"
                             textAlign='center'
+                            placeholderTextColor={'#888'}
                         />
                         <Text style={styles.text_description}> to </Text>
                         <TextInput
@@ -102,6 +113,7 @@ const Settings = () => {
                             placeholder="100"
                             keyboardType="numeric"
                             textAlign='center'
+                            placeholderTextColor={'#888'}
                         />
                         <Text style={styles.text_description}>)</Text>
                     </View>
@@ -109,11 +121,21 @@ const Settings = () => {
                     <Text style={styles.text_operations}>Division</Text>
                     <Text style={styles.text_description}>Multiplication problems in reverse</Text>
                 </View>
-                <View>
+                <View style={{flexDirection:"row", alignItems: "center"}}>
                     <Text style={styles.text_description}>Duration:</Text>
+                    <TextInput
+                        style={styles.input}
+                        onChangeText={onChangeNumber8}
+                        value={number8}
+                        placeholder="120"
+                        keyboardType="numeric"
+                        textAlign='center'
+                        placeholderTextColor={'#888'}
+                    />
+                    <Text style={styles.text_description}>seconds</Text>
                 </View>
                 <View style={{marginLeft: "auto"}}>
-                    <TouchableOpacity style={styles.button_start}>
+                    <TouchableOpacity style={styles.button_start} onPress={() => {navigation.navigate("ArithmeticGame")}}>
                         <Text style={styles.text_start}>Start</Text>
                     </TouchableOpacity>
                 </View>

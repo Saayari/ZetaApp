@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View, Image, TouchableOpacity, SafeAreaView} from 'react-native';
+import {StyleSheet, Text, View, Image, TouchableWithoutFeedback, SafeAreaView} from 'react-native';
 
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
@@ -11,7 +11,8 @@ const Home = () => {
     const navigation = useNavigation<NativeStackNavigationProp<StackParamList>>();
 
     return (
-        <TouchableOpacity style={styles.container} onPress={() => {navigation.navigate("Settings")}}>
+        <TouchableWithoutFeedback onPress={() => {navigation.navigate("Settings")}}>
+        <SafeAreaView style={styles.container}>
             <View style={{marginBottom: 100, alignItems: "center", justifyContent: "center"}}>
                 <Image style={styles.logo} source={require("../assets/squarezeta.png")} />
                 <Text style={styles.heading}>Zeta App</Text>
@@ -20,7 +21,8 @@ const Home = () => {
                 <Text style={styles.text_description}>arithmetic.zetamac.com.</Text>
             </View>
             <Text style={styles.text}>Click to continue</Text>
-        </TouchableOpacity>
+        </SafeAreaView>
+        </TouchableWithoutFeedback>
     )
 }
 

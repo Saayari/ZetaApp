@@ -1,6 +1,7 @@
 import React from 'react';
 import HomeScreen from './screens/Home';
 import SettingsScreen from './screens/Settings';
+import ArithmeticGameScreen from './screens/ArithmeticGame';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useFonts } from "expo-font";
@@ -9,6 +10,7 @@ import {StyleSheet, Text, View, Image} from 'react-native';
 export type StackParamList = {
     Home: undefined;
     Settings: undefined;
+    ArithmeticGame: undefined;
 };
 
 const Stack = createNativeStackNavigator<StackParamList>();
@@ -33,6 +35,7 @@ const App = () => {
             <Stack.Navigator>
                 <Stack.Screen name="Home" component={HomeScreen} />
                 <Stack.Screen name="Settings" component={SettingsScreen} />
+                <Stack.Screen name="ArithmeticGame" component={ArithmeticGameScreen} />
             </Stack.Navigator>
         </NavigationContainer>
     )
