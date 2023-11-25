@@ -11,8 +11,8 @@ import {StyleSheet, Text, View, Image} from 'react-native';
 export type StackParamList = {
     Home: undefined;
     Settings: undefined;
-    ArithmeticGame: undefined;
-    Score: {score: number};
+    ArithmeticGame: {number1: string, number2: string, number3: string, number4: string, number5: string, number6: string, number7: string, number8: string, duration: string};
+    Score: {score: number, duration: string};
 };
 
 const Stack = createNativeStackNavigator<StackParamList>();

@@ -13,6 +13,7 @@ const Settings = () => {
     const [number6, onChangeNumber6] = React.useState("");
     const [number7, onChangeNumber7] = React.useState("");
     const [number8, onChangeNumber8] = React.useState("");
+    const [duration, onChangeDuration] = React.useState("120");
 
     const navigation = useNavigation<NativeStackNavigationProp<StackParamList>>();
 
@@ -125,8 +126,8 @@ const Settings = () => {
                     <Text style={styles.text_description}>Duration:</Text>
                     <TextInput
                         style={styles.input}
-                        onChangeText={onChangeNumber8}
-                        value={number8}
+                        onChangeText={onChangeDuration}
+                        value={duration}
                         placeholder="120"
                         keyboardType="numeric"
                         textAlign='center'
@@ -135,7 +136,7 @@ const Settings = () => {
                     <Text style={styles.text_description}>seconds</Text>
                 </View>
                 <View style={{marginLeft: "auto"}}>
-                    <TouchableOpacity style={styles.button_start} onPress={() => {navigation.navigate("ArithmeticGame")}}>
+                    <TouchableOpacity style={styles.button_start} onPress={() => {navigation.navigate("ArithmeticGame", {number1, number2, number3, number4, number5, number6, number7, number8, duration})}}>
                         <Text style={styles.text_start}>Start</Text>
                     </TouchableOpacity>
                 </View>

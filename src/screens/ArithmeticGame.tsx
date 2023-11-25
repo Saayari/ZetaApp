@@ -2,13 +2,18 @@ import React,  {useRef} from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Text, StyleSheet, View, TextInput, TouchableWithoutFeedback, Dimensions, PanResponder} from 'react-native';
 import TimerComponent from '../components/Timer';
-
+import { RouteProp } from '@react-navigation/native';
+import { StackParamList } from '..';
 interface buttonProps {
     buttonNumber: string;
     handlePress: (text: string) => void;
 }
 
-const ArithmeticGame = () => {
+type Props = {
+    route: RouteProp<StackParamList, 'ArithmeticGame'>;
+};
+
+const ArithmeticGame: React.FC<Props> = ({ route }) => {
     const [answer, setAnswer] = React.useState("");
 
     const [num1, setNum1] = React.useState(0);
@@ -17,18 +22,20 @@ const ArithmeticGame = () => {
     const [operationText, setOperationText] = React.useState("+");
     const [correctAnswer, setCorrectAnswer] = React.useState("");
 
+    const { number1, number2, number3, number4, number5, number6, number7, number8, duration} = route.params;
+
     const gameStart = () => {
         console.log("game started!")
         const operation = Math.floor(Math.random() * 4);
         console.log(operation);
         let placeholder1, placeholder2;
         if (operation < 2) {
-            placeholder1 = (Math.floor(Math.random() * 99) + 2);
-            placeholder2 = (Math.floor(Math.random() * 99) + 2);
+            placeholder1 = (Math.floor(Math.random() * (Number(number2) - 1)) + Number(number1));
+            placeholder2 = (Math.floor(Math.random() * (Number(number4) - 1)) + Number(number3));
         }
         else {
-            placeholder1 = (Math.floor(Math.random() * 99) + 2);
-            placeholder2 = (Math.floor(Math.random() * 10) + 2);
+            placeholder1 = (Math.floor(Math.random() * (Number(number6) - 1)) + Number(number5));
+            placeholder2 = (Math.floor(Math.random() * (Number(number8) - 1)) + Number(number7));
         }
         console.log(`${placeholder1} ${placeholder2}`)
         if (operation === 1) {
@@ -122,7 +129,7 @@ const ArithmeticGame = () => {
     return (
         <SafeAreaView style={styles.container}>
             <View style={{flexDirection: "row"}}>
-                <TimerComponent score={score}/>
+                <TimerComponent score={score} duration={duration}/>
                 <View style={{marginLeft: "auto", flexDirection: "row"}}>
                     <View style={{marginRight: 20, flexDirection: "row"}}>
                         <Text style={styles.text_header}>Score: </Text>

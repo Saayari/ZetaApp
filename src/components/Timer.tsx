@@ -6,10 +6,11 @@ import { StackParamList } from '..';
 
 interface TimerProps {
     score: number;
+    duration: string;
 }
 
-const TimerComponent: React.FC<TimerProps> = ({ score }: TimerProps) => {
-    const [timeLeft, setTimeLeft] = useState(120);
+const TimerComponent: React.FC<TimerProps> = ({ score, duration }: TimerProps) => {
+    const [timeLeft, setTimeLeft] = useState(Number(duration));
 
     const navigation = useNavigation<NativeStackNavigationProp<StackParamList>>();
 
