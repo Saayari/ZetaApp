@@ -1,8 +1,7 @@
 import React,  {useRef} from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Text, StyleSheet, View, TextInput, TouchableWithoutFeedback, Dimensions, PanResponder} from 'react-native';
-import NumpadButton from '../components/Numpad';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import TimerComponent from '../components/Timer';
 
 interface buttonProps {
     buttonNumber: string;
@@ -12,21 +11,98 @@ interface buttonProps {
 const ArithmeticGame = () => {
     const [answer, setAnswer] = React.useState("");
 
+    const [num1, setNum1] = React.useState(0);
+    const [num2, setNum2] = React.useState(0);
+    const [score, setScore] = React.useState(0);
+    const [operationText, setOperationText] = React.useState("+");
+    const [correctAnswer, setCorrectAnswer] = React.useState("");
+
+    const gameStart = () => {
+        console.log("game started!")
+        const operation = Math.floor(Math.random() * 4);
+        console.log(operation);
+        let placeholder1, placeholder2;
+        if (operation < 2) {
+            placeholder1 = (Math.floor(Math.random() * 99) + 2);
+            placeholder2 = (Math.floor(Math.random() * 99) + 2);
+        }
+        else {
+            placeholder1 = (Math.floor(Math.random() * 99) + 2);
+            placeholder2 = (Math.floor(Math.random() * 10) + 2);
+        }
+        console.log(`${placeholder1} ${placeholder2}`)
+        if (operation === 1) {
+            setOperationText("-");
+            setNum1(placeholder1+placeholder2);
+            setNum2(placeholder2)
+            setCorrectAnswer((placeholder1).toString());
+        }
+        else if (operation === 2) {
+            setOperationText("x");
+            setNum1(placeholder1);
+            setNum2(placeholder2);
+            setCorrectAnswer((placeholder1 * placeholder2).toString());
+        }
+        else if (operation === 3) {
+            setOperationText("÷");
+            setNum1(placeholder1*placeholder2);
+            setNum2(placeholder2);
+            setCorrectAnswer((placeholder1).toString());
+        }
+        else {
+            setOperationText("+");
+            setNum1(placeholder1);
+            setNum2(placeholder2);
+            setCorrectAnswer((placeholder1+placeholder2).toString());
+        }
+    }
+
+    React.useEffect(() => {
+        gameStart();
+    }, []);
+
     const handlePress = (buttonNumber: string) => {
+        console.log(correctAnswer);
         if (buttonNumber === "." && answer.includes(".")) {
             return;
         }
         if (buttonNumber === "-" && answer.length > 0) {
             return;
         }
-        setAnswer(answer + buttonNumber);
+        if ((answer+buttonNumber) == correctAnswer) {
+            deleteAnswer();
+            setScore(score + 1);
+            gameStart();
+        }
+        else {
+            setAnswer(answer + buttonNumber);
+        }
+
+
     }
 
     const deleteAnswer = () => {
         setAnswer("");
     }
 
-    
+    const NumpadButton: React.FC<buttonProps> = ({ buttonNumber, handlePress }) => {
+        const panResponder = useRef(
+            PanResponder.create({
+                onStartShouldSetPanResponder: () => true,
+                onPanResponderGrant: () => {
+                    handlePress(buttonNumber);
+                },
+            })
+        ).current;
+
+        return (
+            <View {...panResponder.panHandlers}>
+                <View style={styles.numpad}>
+                    <Text style={styles.text_numpad}>{buttonNumber}</Text>
+                </View>
+            </View>
+        );
+    };
 
     const DeleteButton: React.FC<buttonProps>  =  ({buttonNumber, handlePress}) => {
         const panResponder = useRef(
@@ -48,70 +124,65 @@ const ArithmeticGame = () => {
     }
 
     return (
-        <GestureHandlerRootView style={styles.container}>
-            <SafeAreaView style={styles.container}>
-                <View style={{flexDirection: "row"}}>
-                    <View style={{flexDirection: "row", marginLeft: 10}}>
-                        <Text style={styles.text_header}>Seconds Left: </Text>
-                        <Text style={styles.text_header}>0</Text>
+        <SafeAreaView style={styles.container}>
+            <View style={{flexDirection: "row"}}>
+                <TimerComponent />
+                <View style={{marginLeft: "auto", flexDirection: "row"}}>
+                    <View style={{marginRight: 20, flexDirection: "row"}}>
+                        <Text style={styles.text_header}>Score: </Text>
+                        <Text style={styles.text_header}>{score}</Text>
                     </View>
-                    <View style={{marginLeft: "auto", flexDirection: "row"}}>
-                        <View style={{marginRight: 20, flexDirection: "row"}}>
-                            <Text style={styles.text_header}>Score: </Text>
-                            <Text style={styles.text_header}>0</Text>
-                        </View>
 
+                </View>
+            </View>
+
+            <View style={styles.game_container}>
+                <View style={{alignItems: "center", marginTop: 20, justifyContent: "space-evenly"}}>
+                    <View style={{flexDirection: "row"}}>
+                        <Text style={styles.text_game}>{num1}</Text>
+                        <Text style={styles.text_game}> {operationText} </Text>
+                        <Text style={styles.text_game}>{num2}</Text>
+                        <Text style={styles.text_game}> = </Text>
+                    </View>
+
+                    <TextInput 
+                        style={styles.answer}
+                        keyboardType="numeric"
+                        textAlign='center'
+                        placeholderTextColor={'#888'}
+                        value={answer}
+                        editable={false}
+                    />
+                </View>
+                <View style={{}}>
+                    <View style={{flexDirection: "row"}}>
+                        <NumpadButton  buttonNumber="1" handlePress={handlePress}/>
+                        <NumpadButton  buttonNumber="2" handlePress={handlePress}/>
+                        <NumpadButton  buttonNumber="3" handlePress={handlePress}/>
+                    </View>
+                    <View style={{flexDirection: "row"}}>
+                        <NumpadButton  buttonNumber="4" handlePress={handlePress}/>
+                        <NumpadButton  buttonNumber="5" handlePress={handlePress}/>
+                        <NumpadButton  buttonNumber="6" handlePress={handlePress}/>
+                    </View>
+                    <View style={{flexDirection: "row"}}>
+                        <NumpadButton  buttonNumber="7" handlePress={handlePress}/>
+                        <NumpadButton  buttonNumber="8" handlePress={handlePress}/>
+                        <NumpadButton  buttonNumber="9" handlePress={handlePress}/>
+                    </View>
+                    <View style={{flexDirection: "row"}}>
+                        <NumpadButton  buttonNumber="-" handlePress={handlePress}/>
+                        <NumpadButton  buttonNumber="0" handlePress={handlePress}/>
+                        <NumpadButton  buttonNumber="." handlePress={handlePress}/>
+                    </View>
+                    
+                    <View>
+                        <DeleteButton  buttonNumber="X" handlePress={deleteAnswer}/>
                     </View>
                 </View>
+            </View>
 
-                <View style={styles.game_container}>
-                    <View style={{alignItems: "center", marginTop: 20, justifyContent: "space-evenly"}}>
-                        <View style={{flexDirection: "row"}}>
-                            <Text style={styles.text_game}>898</Text>
-                            <Text style={styles.text_game}> + </Text>
-                            <Text style={styles.text_game}>234</Text>
-                            <Text style={styles.text_game}> = </Text>
-                        </View>
-
-                        <TextInput 
-                            style={styles.answer}
-                            keyboardType="numeric"
-                            textAlign='center'
-                            placeholderTextColor={'#888'}
-                            value={answer}
-                            editable={false}
-                        />
-                    </View>
-                    <View style={{}}>
-                        <View style={{flexDirection: "row"}}>
-                            <NumpadButton  buttonNumber="1" handlePress={handlePress}/>
-                            <NumpadButton  buttonNumber="2" handlePress={handlePress}/>
-                            <NumpadButton  buttonNumber="3" handlePress={handlePress}/>
-                        </View>
-                        <View style={{flexDirection: "row"}}>
-                            <NumpadButton  buttonNumber="4" handlePress={handlePress}/>
-                            <NumpadButton  buttonNumber="5" handlePress={handlePress}/>
-                            <NumpadButton  buttonNumber="6" handlePress={handlePress}/>
-                        </View>
-                        <View style={{flexDirection: "row"}}>
-                            <NumpadButton  buttonNumber="7" handlePress={handlePress}/>
-                            <NumpadButton  buttonNumber="8" handlePress={handlePress}/>
-                            <NumpadButton  buttonNumber="9" handlePress={handlePress}/>
-                        </View>
-                        <View style={{flexDirection: "row"}}>
-                            <NumpadButton  buttonNumber="-" handlePress={handlePress}/>
-                            <NumpadButton  buttonNumber="0" handlePress={handlePress}/>
-                            <NumpadButton  buttonNumber="." handlePress={handlePress}/>
-                        </View>
-                        
-                        <View>
-                            <DeleteButton  buttonNumber="X" handlePress={deleteAnswer}/>
-                        </View>
-                    </View>
-                </View>
-
-            </SafeAreaView>
-        </GestureHandlerRootView>
+        </SafeAreaView>
     );
 };
 
