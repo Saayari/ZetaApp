@@ -55,6 +55,7 @@ const ArithmeticGame = () => {
             setNum2(placeholder2);
             setCorrectAnswer((placeholder1+placeholder2).toString());
         }
+        setTimeout(() => deleteAnswer(), 80);
     }
 
     React.useEffect(() => {
@@ -69,16 +70,11 @@ const ArithmeticGame = () => {
         if (buttonNumber === "-" && answer.length > 0) {
             return;
         }
+        setAnswer(answer + buttonNumber);
         if ((answer+buttonNumber) == correctAnswer) {
-            deleteAnswer();
             setScore(score + 1);
             gameStart();
         }
-        else {
-            setAnswer(answer + buttonNumber);
-        }
-
-
     }
 
     const deleteAnswer = () => {
