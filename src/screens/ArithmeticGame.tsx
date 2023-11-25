@@ -126,7 +126,7 @@ const ArithmeticGame = () => {
     return (
         <SafeAreaView style={styles.container}>
             <View style={{flexDirection: "row"}}>
-                <TimerComponent />
+                <TimerComponent score={score}/>
                 <View style={{marginLeft: "auto", flexDirection: "row"}}>
                     <View style={{marginRight: 20, flexDirection: "row"}}>
                         <Text style={styles.text_header}>Score: </Text>

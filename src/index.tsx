@@ -12,7 +12,7 @@ export type StackParamList = {
     Home: undefined;
     Settings: undefined;
     ArithmeticGame: undefined;
-    Score: undefined;
+    Score: {score: number};
 };
 
 const Stack = createNativeStackNavigator<StackParamList>();
