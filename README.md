@@ -3,23 +3,23 @@ Download the Expo Go app onto your phone
 
 Create a folder: 
 
-mkdir Zeta
+  mkdir Zeta
 
 cd into your folder: 
 
-cd Zeta
+  cd Zeta
 
 Clone the repository: 
 
-git clone https://github.com/Saayari/ZetaApp.git
+  git clone https://github.com/Saayari/ZetaApp.git
 
 cd into the new project folder:
 
-cd ZetaApp
+  cd ZetaApp
 
 Install yarn packages:
 
-yarn install
+  yarn install
 
 Start the server:
 
