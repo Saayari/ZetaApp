@@ -1,7 +1,8 @@
 import React from 'react';
-import { View, Text, SafeAreaView, StyleSheet} from 'react-native';
-import { RouteProp } from '@react-navigation/native';
+import { View, Text, SafeAreaView, StyleSheet, TouchableWithoutFeedback} from 'react-native';
+import { RouteProp, useNavigation } from '@react-navigation/native';
 import { StackParamList } from '..';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 type Props = {
     route: RouteProp<StackParamList, 'Score'>;
@@ -9,14 +10,18 @@ type Props = {
 
 const Score: React.FC<Props> = ({ route }) => {
 
+    const navigation = useNavigation<NativeStackNavigationProp<StackParamList>>();
+
     const { score } = route.params;
 
     return (
-        <SafeAreaView style={styles.container}>
-            <View style={{flexDirection: "row"}}>
+        <TouchableWithoutFeedback onPress={() => {navigation.navigate("Settings")}}>
+            <SafeAreaView style={styles.container}>
                 <Text style={styles.heading}>Score: {score}</Text>
-            </View>
-        </SafeAreaView>
+                <Text style={styles.text}>Click to restart</Text>
+            </SafeAreaView>
+        </TouchableWithoutFeedback>
+
     );
 };
 
@@ -35,5 +40,10 @@ const styles = StyleSheet.create({
         fontSize: 48,
         fontFamily: "Quicksand-Bold",
         marginBottom: 20,
+    },
+    text: {
+        color: '#888',
+        fontSize: 24,
+        fontFamily: "Quicksand-Regular",
     },
 });

@@ -10,9 +10,9 @@ const Settings = () => {
     const [number3, onChangeNumber3] = React.useState("2");
     const [number4, onChangeNumber4] = React.useState("100");
     const [number5, onChangeNumber5] = React.useState("2");
-    const [number6, onChangeNumber6] = React.useState("12");
+    const [number6, onChangeNumber6] = React.useState("100");
     const [number7, onChangeNumber7] = React.useState("2");
-    const [number8, onChangeNumber8] = React.useState("100");
+    const [number8, onChangeNumber8] = React.useState("12");
     const [duration, onChangeDuration] = React.useState("120");
 
     const navigation = useNavigation<NativeStackNavigationProp<StackParamList>>();
@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
     view_header: {
         justifyContent: "space-between",
         alignItems: "center",
-        marginBottom: 20,
+        marginTop: 50
     },
     view_operations: {
         justifyContent: "space-between",
@@ -213,6 +213,5 @@ const styles = StyleSheet.create({
     logo: {
         width: 50,
         height: 50,
-        marginTop: 10,
     }
 })

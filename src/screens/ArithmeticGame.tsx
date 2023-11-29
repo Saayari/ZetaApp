@@ -140,12 +140,13 @@ const ArithmeticGame: React.FC<Props> = ({ route }) => {
             </View>
 
             <View style={styles.game_container}>
-                <View style={{alignItems: "center", marginTop: 20, justifyContent: "space-evenly"}}>
+                <View style={{alignItems: "center", marginTop: Dimensions.get('window').height/15, justifyContent: "space-evenly"}}>
                     <View style={{flexDirection: "row"}}>
                         <Text style={styles.text_game}>{num1}</Text>
                         <Text style={styles.text_game}> {operationText} </Text>
                         <Text style={styles.text_game}>{num2}</Text>
                         <Text style={styles.text_game}> = </Text>
+
                     </View>
 
                     <TextInput 
