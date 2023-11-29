@@ -1,6 +1,6 @@
 ## Setup
 
-Prerequisites
+Prerequisites:
 
 Download the Expo Go app onto your phone
 
