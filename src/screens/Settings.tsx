@@ -5,14 +5,14 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { StackParamList } from '..';
 
 const Settings = () => {
-    const [number1, onChangeNumber1] = React.useState("");
-    const [number2, onChangeNumber2] = React.useState("");
-    const [number3, onChangeNumber3] = React.useState("");
-    const [number4, onChangeNumber4] = React.useState("");
-    const [number5, onChangeNumber5] = React.useState("");
-    const [number6, onChangeNumber6] = React.useState("");
-    const [number7, onChangeNumber7] = React.useState("");
-    const [number8, onChangeNumber8] = React.useState("");
+    const [number1, onChangeNumber1] = React.useState("2");
+    const [number2, onChangeNumber2] = React.useState("100");
+    const [number3, onChangeNumber3] = React.useState("2");
+    const [number4, onChangeNumber4] = React.useState("100");
+    const [number5, onChangeNumber5] = React.useState("2");
+    const [number6, onChangeNumber6] = React.useState("12");
+    const [number7, onChangeNumber7] = React.useState("2");
+    const [number8, onChangeNumber8] = React.useState("100");
     const [duration, onChangeDuration] = React.useState("120");
 
     const navigation = useNavigation<NativeStackNavigationProp<StackParamList>>();
