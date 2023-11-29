@@ -1,10 +1,10 @@
-# Setup
+## Setup
 Download the Expo Go app onto your phone
 
 Create a folder: 
-
+```
   mkdir Zeta
-
+```
 cd into your folder: 
 
   cd Zeta
